@@ -19,12 +19,13 @@ func main() {
 		addr = "127.0.0.1:8080"
 	}
 	srv := &http.Server{
-		Addr: addr, Handler: api.NewHandler(),
+		Addr:              addr,
+		Handler:           api.NewHandler(),
 		ReadHeaderTimeout: 5 * time.Second,
-		ReadTimeout: 15 * time.Second,
-		WriteTimeout: 15 * time.Second,
-		IdleTimeout: 60 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		ReadTimeout:       15 * time.Second,
+		WriteTimeout:      15 * time.Second,
+		IdleTimeout:       60 * time.Second,
+		MaxHeaderBytes:    1 << 20,
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()

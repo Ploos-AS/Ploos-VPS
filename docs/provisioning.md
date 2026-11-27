@@ -1,0 +1,3 @@
+# Provisioning foundation
+
+The lifecycle interface and in-memory fake provider support create, get, start, stop and delete. Repeated create with identical input returns the existing instance; conflicting input is rejected while the instance exists. Delete is idempotent. Deleted identifiers can be reused in this simulator; production must enforce durable operation identity and prevent stale retries. The fake is process-local, requires construction with New, and is not a production backend. Disk sizing, network allocation, cloud-init, tenant authorization, database-backed jobs, capacity reservations, provider task polling and reconciliation are not implemented. Proxmox remains read-only. No live VM changes are made.

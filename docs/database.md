@@ -1,0 +1,3 @@
+# Database foundation
+
+PostgreSQL 17 is the initial test baseline. Apply numbered SQL migrations in order with psql and ON_ERROR_STOP. The first migration creates tenants, sites, clusters, nodes, plans, instances and operations. The down migration destroys these tables; use only on disposable databases or after explicit recovery planning. CI exercises migration, constraints, rollback and reapplication. No production credentials are included; CI credentials are disposable. Go connectivity, migration tracking, tenant authorization, immutable plan versions, capacity reservations, IPAM, worker leases and reconciliation are subsequent work. Foreign keys alone do not enforce read authorization. Do not deploy this schema as a complete production control plane.

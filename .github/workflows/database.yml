@@ -1,0 +1,36 @@
+name: Database
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: ploos_vps
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test -d ploos_vps"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: test
+      PGPASSWORD: test
+      PGDATABASE: ploos_vps
+    steps:
+      - uses: actions/checkout@v4
+      - run: psql -v ON_ERROR_STOP=1 -f migrations/000001_initial.up.sql
+      - run: psql -v ON_ERROR_STOP=1 -f tests/database.sql
+      - run: psql -v ON_ERROR_STOP=1 -f migrations/000001_initial.down.sql
+      - run: psql -v ON_ERROR_STOP=1 -f migrations/000001_initial.up.sql
